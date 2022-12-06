@@ -1,4 +1,6 @@
+# Custom
 /build
+CMakeLists.txt.user
 
 # Prerequisites
 *.d
