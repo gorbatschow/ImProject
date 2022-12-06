@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.16.0)
 
 project(implot)
 
-set(IMPLOT_HEADERS 
-    implot/implot.h 
-    implot/implot_internal.h
-)    
 set(IMPLOT_SOURCES
     implot/implot.cpp
     implot/implot_items.cpp

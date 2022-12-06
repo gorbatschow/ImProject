@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.16.0)
 
 project(fonts)
 
-set(FONTS_HEADERS
-    fonts/Fonts.hpp
-)
-
 set(FONTS_SOURCES
     # Roboto
     fonts/RobotoRegular.cpp
@@ -18,4 +14,4 @@ set(FONTS_SOURCES
 )
 
 add_library(fonts ${FONTS_SOURCES})
-target_include_directories (fonts PUBLIC fonts)
+target_include_directories(fonts PUBLIC fonts)

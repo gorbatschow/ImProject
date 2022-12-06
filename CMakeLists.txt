@@ -16,6 +16,9 @@ add_subdirectory(external/implot)
 # FONTS
 add_subdirectory(external/fonts)
 
+# COMMON
+add_subdirectory(common)
+
 # SOURCES
 add_subdirectory(src)
 
