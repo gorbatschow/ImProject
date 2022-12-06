@@ -15,6 +15,7 @@ target_link_libraries(ImProjectCommon PUBLIC glfw)
 target_link_libraries(ImProjectCommon PUBLIC imgui)
 target_link_libraries(ImProjectCommon PUBLIC implot)
 target_link_libraries(ImProjectCommon PUBLIC fonts)
+target_link_libraries(ImProjectCommon PUBLIC stb)
 
 include(FindOpenGL)
 target_link_libraries(ImProjectCommon PUBLIC ${OPENGL_LIBRARIES})

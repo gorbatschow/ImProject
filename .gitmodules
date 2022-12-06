@@ -7,3 +7,6 @@
 [submodule "external/implot/implot"]
 	path = external/implot/implot
 	url = git@github.com:epezent/implot.git
+[submodule "external/stb/stb"]
+	path = external/stb/stb
+	url = git@github.com:nothings/stb.git
