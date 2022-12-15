@@ -1,21 +1,29 @@
 #pragma once
+#include <imgui.h>
+#include <string>
 class GLFWwindow;
 
 class ImProjectApp {
 public:
-  ImProjectApp();
+  ImProjectApp(const std::string &title = "Dear ImGui GLFW+OpenGL3");
   virtual ~ImProjectApp();
 
-  void run();
-  void quit();
+  int run();
 
 protected:
-  virtual void beforeRun() {}
-  virtual void paint(int w, int h);
+  virtual void beforeLoop() {}
+  virtual void paint();
+  virtual void beforeQuit() {}
 
 private:
-  GLFWwindow *m_glwin = nullptr;
+  std::string _windowTitle{};
+  GLFWwindow *_glfwWindow{nullptr};
+  int _displayW{}, _displayH{};
+  ImVec4 _clearColor{0.45f, 0.55f, 0.60f, 1.00f};
 
-  int _frameBufferW{};
-  int _frameBufferH{};
+  int init();
+  void loop();
+  void quit();
+
+  static void onGlfwError(int error, const char *description) noexcept;
 };

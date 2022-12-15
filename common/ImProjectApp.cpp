@@ -1,59 +1,104 @@
 #include "ImProjectApp.h"
 #include "ImWrapper.h"
-#include <Fonts.h>
 #include <GLFW/glfw3.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <chrono>
+#include <imfonts.h>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <implot.h>
+
+// Based on Dear ImGui example "Dear ImGui: standalone example application for
+// GLFW + OpenGL 3, using programmable pipeline"
+// https://github.com/ocornut/imgui/blob/master/examples/example_glfw_opengl3/main.cpp
 
 // See "Extremely Important Note" in README https://github.com/epezent/implot
 // io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset' and handle
 // ImDrawCmd::VtxOffset #define ImDrawIdx unsigned int
 
-static void glfw_error_callback(int error, const char *description) noexcept {
-  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-}
+ImProjectApp::ImProjectApp(const std::string &title) : _windowTitle(title) {}
+// -----------------------------------------------------------------------------
+ImProjectApp::~ImProjectApp() {}
+// -----------------------------------------------------------------------------
+int ImProjectApp::run() {
+  const auto initStatus = init();
+  if (initStatus != 0)
+    return initStatus;
+  beforeLoop();
+  loop();
+  beforeQuit();
+  quit();
 
-ImProjectApp::ImProjectApp() {
+  return 0;
+}
+// -----------------------------------------------------------------------------
+void ImProjectApp::paint() {
+  static auto helloLabel = ImWrap::Label("Hello World");
+  ImGui::Begin("Welcome Window");
+  helloLabel.paint();
+  ImGui::End();
+}
+// -----------------------------------------------------------------------------
+int ImProjectApp::init() {
   // Setup window
-  glfwSetErrorCallback(glfw_error_callback);
+  glfwSetErrorCallback(onGlfwError);
   if (glfwInit() == 0) {
-    return;
+    return 1;
   }
 
+// Decide GL+GLSL versions
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+  // GL ES 2.0 + GLSL 100
+  const char *glsl_version = "#version 100";
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+  glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+#elif defined(__APPLE__)
   // GL 3.2 + GLSL 150
   const char *glsl_version = "#version 150";
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Required on Mac
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
+#else
+  // GL 3.0 + GLSL 130
+  const char *glsl_version = "#version 130";
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+  // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+
+  // only glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // 3.0+ only
+#endif
 
   // Create window with graphics context
-  m_glwin = glfwCreateWindow(1024, 768, "BaseApp", nullptr, nullptr);
-  if (m_glwin == nullptr) {
-    return;
-  }
-  glfwMakeContextCurrent(m_glwin);
+  _glfwWindow = glfwCreateWindow(1280, 720, _windowTitle.c_str(), NULL, NULL);
+  if (_glfwWindow == NULL)
+    return 1;
+  glfwMakeContextCurrent(_glfwWindow);
   glfwSwapInterval(1); // Enable vsync
 
+  // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImPlot::CreateContext();
-
+  ImGuiIO &io = ImGui::GetIO();
+  (void)io;
   // Backend
-  ImGui::GetIO().BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
-  // Keyboard
-  ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+  io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
   // Docking
-  ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-  // Viewports
-  // ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  // Viewport
+  // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+  // Keyboard Controls
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+  // Gamepad
+  // Keyboard Controls io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
+  // Setup Dear ImGui style
   ImGui::StyleColorsDark();
-  ImGui_ImplGlfw_InitForOpenGL(m_glwin, true);
+  // ImGui::StyleColorsLight();
+
+  // Setup Platform/Renderer backends
+  ImGui_ImplGlfw_InitForOpenGL(_glfwWindow, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
 
   // Setup Font
@@ -67,71 +112,47 @@ ImProjectApp::ImProjectApp() {
   ImGui::GetIO().Fonts->AddFontFromMemoryTTF(
       Roboto_Regular_ttf, Roboto_Regular_ttf_len, std::round(16), &font_cfg,
       ImGui::GetIO().Fonts->GetGlyphRangesCyrillic());
+
+  return 0;
 }
-
-ImProjectApp::~ImProjectApp() {}
-
-void ImProjectApp::run() {
-  beforeRun();
-
+// -----------------------------------------------------------------------------
+void ImProjectApp::loop() {
   // Main loop
-  while (glfwWindowShouldClose(m_glwin) == 0) {
+  while (glfwWindowShouldClose(_glfwWindow) == 0) {
     // Poll and handle events (inputs, window resize, etc.)
     glfwPollEvents();
 
-    // OpenGL frame
+    // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // Resize viewport
-    int display_w{0}, display_h{0};
-    glfwGetFramebufferSize(m_glwin, &display_w, &display_h);
-    glViewport(0, 0, display_w, display_h);
-
-    // Clear background
-    glfwGetFramebufferSize(m_glwin, &_frameBufferW, &_frameBufferH);
-    glViewport(0, 0, _frameBufferW, _frameBufferH);
-    glClearColor(0.1, 0.1, 0.1, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     // ImGui docking
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(),
                                  ImGuiDockNodeFlags_PassthruCentralNode);
-
-    paint(display_w, display_h);
-    ImGui::EndFrame();
-
-    // ImGui::UpdatePlatformWindows();
+    paint();
 
     // Rendering
     ImGui::Render();
-    // finialize the imgui render into draw data, and render it.
+    glfwGetFramebufferSize(_glfwWindow, &_displayW, &_displayH);
+    glViewport(0, 0, _displayW, _displayH);
+    glClearColor(_clearColor.x * _clearColor.w, _clearColor.y * _clearColor.w,
+                 _clearColor.z * _clearColor.w, _clearColor.w);
+    glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    // swap the render/draw buffers so the user can see this frame.
-    glfwSwapBuffers(m_glwin);
-
-    /*
-    // change the native (host) window size if requested.
-    if (newSize.has_value()) {_
-        glfwSetWindowSize(window, newSize.value().first,
-    newSize.value().second); newSize.reset();
-    }*/
+    glfwSwapBuffers(_glfwWindow);
   }
 }
-
+// -----------------------------------------------------------------------------
 void ImProjectApp::quit() {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
   ImPlot::DestroyContext();
-  glfwDestroyWindow(m_glwin);
+  glfwDestroyWindow(_glfwWindow);
   glfwTerminate();
 }
-
-void ImProjectApp::paint(int w, int h) {
-  static auto helloLabel = ImWrap::Label("Hello World");
-  ImGui::Begin("Welcome Window");
-  helloLabel.paint();
-  ImGui::End();
+// -----------------------------------------------------------------------------
+void ImProjectApp::onGlfwError(int error, const char *description) noexcept {
+  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
