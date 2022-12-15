@@ -13,3 +13,6 @@
 [submodule "external/imfonts/imfonts"]
 	path = external/imfonts/imfonts
 	url = git@github.com:gorbatschow/ImFonts.git
+[submodule "external/imapp/imapp"]
+	path = external/imapp/imapp
+	url = git@github.com:gorbatschow/ImApplication.git
