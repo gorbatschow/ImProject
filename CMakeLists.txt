@@ -1,5 +1,3 @@
-# ImProject
-
 cmake_minimum_required(VERSION 3.16.0)
 
 project(ImProject VERSION 1.0.0)
@@ -13,16 +11,16 @@ add_subdirectory(external/imgui)
 # IMPLOT
 add_subdirectory(external/implot)
 
-# FONTS
+# IMFONTS
 add_subdirectory(external/imfonts)
 
 # STB
 add_subdirectory(external/stb)
 
-# COMMON
-add_subdirectory(common)
+# IMAPP
+add_subdirectory(external/imapp)
 
-# SOURCES
+# EXECUTABLE
 add_subdirectory(src)
 
 
