@@ -14,7 +14,7 @@ add_subdirectory(external/imgui)
 add_subdirectory(external/implot)
 
 # FONTS
-add_subdirectory(external/fonts)
+add_subdirectory(external/imfonts)
 
 # STB
 add_subdirectory(external/stb)
