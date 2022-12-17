@@ -12,7 +12,7 @@ If you are looking for a more featured swiss knife try https://github.com/pthom/
 
 For example this application ![ImOsmDemo](https://github.com/gorbatschow/ImOsmWidgetDemo) is based on ImProject template.
 
-## What's is in the box
+## What's in the box
 The following external dependencies are included as submodules
 - GLFW https://github.com/glfw/glfw
 - ImGui https://github.com/ocornut/imgui
