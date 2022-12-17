@@ -1,6 +1,6 @@
 # ImProject
 
-A sample project to easily start with ImGui with GLFW backend on Linux.
+A template project to easily start with ImGui with GLFW backend on Linux.
 
 If you are looking for a more featured swiss knife try https://github.com/pthom/hello_imgui .
 
