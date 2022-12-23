@@ -24,9 +24,9 @@ Also included tiny libraries made by me
 - ImFonts https://github.com/gorbatschow/ImFonts
  
 ## Ubuntu/Mint dependencies
-Probably you have to install the following packages
+The following packages must be installed
 ```
-sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev freeglut3-dev
+libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev freeglut3-dev
 ```
 and maybe others...
 
