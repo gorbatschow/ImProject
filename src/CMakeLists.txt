@@ -9,6 +9,6 @@ set(IMPROJECTEXE_SOURCES
     main.cpp
 )
 
-add_executable(ImProjectExe ${IMPROJECTEXE_SOURCES})
-target_include_directories(ImProjectExe PUBLIC .)
-target_link_libraries(ImProjectExe PUBLIC ImApplication)
+add_executable(${PROJECT_NAME} ${IMPROJECTEXE_SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC .)
+target_link_libraries(${PROJECT_NAME} PUBLIC ImApplication)
