@@ -1,6 +1,6 @@
 # ImProject
 
-A template project to easily start with ImGui with GLFW backend on Linux.
+A template project to begin ImGui-based application with GLFW backend on Linux.
 
 If you are looking for a more featured swiss knife try https://github.com/pthom/hello_imgui .
 
@@ -18,11 +18,13 @@ The following external dependencies are included as submodules
 - ImGui https://github.com/ocornut/imgui
 - ImPlot https://github.com/epezent/implot
 - STB https://github.com/nothings/stb
+- mINI https://github.com/pulzed/mINI
 
-Also included tiny libraries made by me
+Also included small libraries made by me
 - ImApplication https://github.com/gorbatschow/ImApplication
 - ImFonts https://github.com/gorbatschow/ImFonts
- 
+- ImWrapper https://github.com/gorbatschow/ImWrapper
+
 ## Ubuntu/Mint dependencies
 The following packages must be installed
 ```
