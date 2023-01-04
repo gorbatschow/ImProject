@@ -19,3 +19,6 @@
 [submodule "external/mini/mini"]
 	path = external/mini/mini
 	url = git@github.com:pulzed/mINI.git
+[submodule "external/imwrap/imwrap"]
+	path = external/imwrap/imwrap
+	url = git@github.com:gorbatschow/ImWrapper.git
