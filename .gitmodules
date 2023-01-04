@@ -16,3 +16,6 @@
 [submodule "external/imapp/imapp"]
 	path = external/imapp/imapp
 	url = git@github.com:gorbatschow/ImApplication.git
+[submodule "external/mini/mini"]
+	path = external/mini/mini
+	url = git@github.com:pulzed/mINI.git
