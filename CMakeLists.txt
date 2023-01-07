@@ -17,6 +17,9 @@ add_subdirectory(external/imfonts)
 # STB
 add_subdirectory(external/stb)
 
+# IMWRAP
+add_subdirectory(external/imwrap)
+
 # IMAPP
 add_subdirectory(external/imapp)
 
