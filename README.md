@@ -10,7 +10,7 @@ If you are looking for a more featured swiss knife try https://github.com/pthom/
 - Place your code in the "src/" folder.
 - Create your own root application class, which inherits ImApplication.
 
-For example this application ![ImOsmDemo](https://github.com/gorbatschow/ImOsmWidgetDemo) is based on ImProject template.
+For example this application [ImOsmDemo](https://github.com/gorbatschow/ImOsmWidgetDemo) is based on ImProject template.
 
 ## What's in the box
 The following external dependencies are included as submodules
