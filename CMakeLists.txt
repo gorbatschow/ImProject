@@ -17,6 +17,9 @@ add_subdirectory(external/imfonts)
 # STB
 add_subdirectory(external/stb)
 
+# MINI
+add_subdirectory(external/mini)
+
 # IMWRAP
 add_subdirectory(external/imwrap)
 
