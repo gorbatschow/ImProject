@@ -21,9 +21,9 @@ The following external dependencies are included as submodules
 - mINI https://github.com/pulzed/mINI
 
 Also included small libraries made by me
-- ImApplication https://github.com/gorbatschow/ImApplication
+- ImApp https://github.com/gorbatschow/ImApp
 - ImFonts https://github.com/gorbatschow/ImFonts
-- ImWrapper https://github.com/gorbatschow/ImWrapper
+- ImWrap https://github.com/gorbatschow/ImWrap
 
 ## Ubuntu/Mint dependencies
 The following packages must be installed
