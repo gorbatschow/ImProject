@@ -1,10 +1,10 @@
-#include "ImApplication.h"
+#include <imapp.h>
 #include <imwrap.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-class ProjectApp : public ImApplication {
+class ProjectApp : public ImApp::MainWindow {
   struct Ui {
     ImWrap::Button btn{"Push"};
     ImWrap::CheckBox flag{"Check"};

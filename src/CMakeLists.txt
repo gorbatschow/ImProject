@@ -12,6 +12,6 @@ set(IMPROJECTEXE_SOURCES
 add_executable(${PROJECT_NAME} ${IMPROJECTEXE_SOURCES})
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 target_include_directories(${PROJECT_NAME} PUBLIC .)
-target_link_libraries(${PROJECT_NAME} PUBLIC ImApplication)
+target_link_libraries(${PROJECT_NAME} PUBLIC imapp)
 target_link_libraries(${PROJECT_NAME} PUBLIC mini)
 target_link_libraries(${PROJECT_NAME} PUBLIC imwrap)

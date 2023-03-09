@@ -24,3 +24,5 @@
 	url = git@github.com:gorbatschow/ImWrapper.git
 [submodule "imwrap"]
 	url = git@github.com:gorbatschow/ImWrap.git
+[submodule "imapp"]
+	url = git@github.com:gorbatschow/ImApp.git
