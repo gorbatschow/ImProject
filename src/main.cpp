@@ -1,17 +1,17 @@
 #include "ImApplication.h"
-#include <imw.h>
+#include <imwrap.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 class ProjectApp : public ImApplication {
   struct Ui {
-    Imw::Button btn{"Push"};
-    Imw::CheckBox flag{"Check"};
-    Imw::ComboBox<bool> combo{"Select"};
-    Imw::ValueLabel<int> label{"Display One %d"};
-    Imw::Slider<float> slider{"Slide"};
-    Imw::SpinBox<int> spin{"Spin"};
+    ImWrap::Button btn{"Push"};
+    ImWrap::CheckBox flag{"Check"};
+    ImWrap::ComboBox<bool> combo{"Select"};
+    ImWrap::ValueLabel<int> label{"Display One %d"};
+    ImWrap::Slider<float> slider{"Slide"};
+    ImWrap::SpinBox<int> spin{"Spin"};
 
     Ui() {
       combo.setValueList({{true, "Yes"}, {false, "No"}});
